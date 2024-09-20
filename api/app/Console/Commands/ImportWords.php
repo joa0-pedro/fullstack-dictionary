@@ -18,6 +18,13 @@ class ImportWords extends Command
 
     public function handle()
     {
+        $wordsOnDb = Word::query()->count();
+
+        if ($wordsOnDb > 0) {
+            $this->error('A lista de palavras ja foi importada.');
+            return;
+        }
+
         $url = 'https://raw.githubusercontent.com/meetDeveloper/freeDictionaryAPI/refs/heads/master/meta/wordList/english.txt';
         $response = Http::get($url);
 
