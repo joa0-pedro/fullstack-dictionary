@@ -72,8 +72,8 @@ export default function Page() {
   }
 
   useEffect(() => {
-    searchWords("")
-  }, [])
+    searchWords("");
+  });
 
   return (
     <>
