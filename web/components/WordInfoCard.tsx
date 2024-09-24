@@ -44,16 +44,17 @@ export function WordInfoCard({ word, phonetics, meanings, onFavoritePage }: Word
 
   useEffect(() => {
     setIsFavorite(false);
+    setMeaningIndex(0);
   }, [word]);
 
   if (!word || !phonetics || !meanings) {
     return null;
   }
 
-  const currentMeaning = meanings?.[meaningIndex];
-  const currentDefinition = currentMeaning?.definitions?.[definitionIndex];
+  const currentMeaning = meanings[meaningIndex];
+  const currentDefinition = currentMeaning.definitions?.[definitionIndex];
   const currentAudio =
-    phonetics?.find((phonetic) => phonetic.audio)?.audio || "";
+    phonetics.find((phonetic) => phonetic.audio)?.audio || "";
 
   const handlePlayAudio = () => {
     if (audioRef.current) {
