@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useAuth } from "../provider/AuthProvider"
-import { Button } from "@/components/ui/button"
+import React, { useState } from "react";
+import { useAuth } from "../provider/AuthProvider";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,25 +10,31 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { useRouter } from "next/navigation"
-import { Form } from "@/components/ui/form"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { Form } from "@/components/ui/form";
+import { Eye, EyeOff } from "lucide-react";
 
-  const LoginSchema = z.object({
-	email: z.string().email('Formato de e-mail inválido'),
-	password: z.string().min(6, 'A senha precisa ter no mínimo 6 caracteres'),
-  });
+const LoginSchema = z.object({
+  email: z.string().email({ message: "Insira um email valido." }).trim(),
+  password: z
+    .string()
+    .min(8, { message: "A senha deve conter no mínimo 8 caracteres" })
+    .trim(),
+});
 
-  type LoginFormData = z.infer<typeof LoginSchema>;
+type LoginFormData = z.infer<typeof LoginSchema>;
 
 export default function Page() {
   const { login } = useAuth();
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -67,7 +73,7 @@ export default function Page() {
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Insira um email para entra na sua conta.
+            Insira um email para entrar na sua conta.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -80,7 +86,19 @@ export default function Page() {
                   <Label className="text-red-500">{errors.email.message}</Label>
                 )}
                 <Label>Senha</Label>
-                <Input type="password" {...register("password")} />
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    {...register("password")}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute text-gray-500 right-2 top-2 dark:text-gray-400"
+                  >
+                    {showPassword ? <EyeOff /> : <Eye />}
+                  </button>
+                </div>
                 {errors.password && (
                   <Label className="text-red-500">
                     {errors.password.message}

@@ -3,7 +3,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function useAuthenticated(){
-  const { isAuthenticated, setIsAuthenticated } = useAuth(); // Atualizando o hook useAuth
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -19,7 +19,7 @@ export default function useAuthenticated(){
       return;
     }
 
-    if (isAuthenticated && pathname === "/login") {
+    if (token && isAuthenticated && pathname === "/login") {
       router.push("/entries/en");
     }
   }, [isAuthenticated, pathname]);

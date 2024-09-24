@@ -6,7 +6,7 @@ import { Progress } from "./ui/progress"
 import { Button } from "./ui/button"
 import api from "@/lib/axios"
 import handleError from "@/lib/handleError"
-import { useEffect } from "react"
+import { useEffect, useState, useRef } from "react";
 
 export interface WordInfoCardProps {
   word?: string
@@ -35,83 +35,83 @@ interface Definition {
 }
 
 export function WordInfoCard({ word, phonetics, meanings, onFavoritePage }: WordInfoCardProps) {
-  const [meaningIndex, setMeaningIndex] = React.useState(0)
-  const [definitionIndex, setDefinitionIndex] = React.useState(0)
-  const [progress, setProgress] = React.useState(0)
-  const [audioPlaying, setAudioPlaying] = React.useState(false)
-  const [isFavorite, setIsFavorite] = React.useState(onFavoritePage)
-  const audioRef = React.useRef<HTMLAudioElement | null>(null)
+  const [meaningIndex, setMeaningIndex] = useState(0);
+  const [definitionIndex, setDefinitionIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [audioPlaying, setAudioPlaying] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(onFavoritePage);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-	setIsFavorite(false)
-}, [word])
-
+    setIsFavorite(false);
+  }, [word]);
 
   if (!word || !phonetics || !meanings) {
-    return null
+    return null;
   }
 
-  const currentMeaning = meanings[meaningIndex]
-  const currentDefinition = currentMeaning.definitions[definitionIndex]
-  const currentAudio = phonetics.find((phonetic) => phonetic.audio)?.audio || ""
+  const currentMeaning = meanings?.[meaningIndex];
+  const currentDefinition = currentMeaning?.definitions?.[definitionIndex];
+  const currentAudio =
+    phonetics?.find((phonetic) => phonetic.audio)?.audio || "";
 
   const handlePlayAudio = () => {
     if (audioRef.current) {
       if (!audioPlaying) {
-        audioRef.current.play()
-        setAudioPlaying(true)
-        return
+        audioRef.current.play();
+        setAudioPlaying(true);
+        return;
       }
-      audioRef.current.pause()
-      setAudioPlaying(false)
+      audioRef.current.pause();
+      setAudioPlaying(false);
     }
-  }
+  };
 
   const handleAudioTimeUpdate = () => {
     if (audioRef.current) {
-      const duration = audioRef.current.duration
-      const currentTime = audioRef.current.currentTime
-      const progressValue = (currentTime / duration) * 100
-      setProgress(progressValue)
+      const duration = audioRef.current.duration;
+      const currentTime = audioRef.current.currentTime;
+      const progressValue = (currentTime / duration) * 100;
+      setProgress(progressValue);
     }
-  }
+  };
 
   const handleAudioEnded = () => {
-    setProgress(0)
-    setAudioPlaying(false)
-  }
+    setProgress(0);
+    setAudioPlaying(false);
+  };
 
   const handleNextDefinition = () => {
     if (definitionIndex < currentMeaning.definitions.length - 1) {
-      setDefinitionIndex(definitionIndex + 1)
+      setDefinitionIndex(definitionIndex + 1);
     } else if (meaningIndex < meanings.length - 1) {
-      setMeaningIndex(meaningIndex + 1)
-      setDefinitionIndex(0)
+      setMeaningIndex(meaningIndex + 1);
+      setDefinitionIndex(0);
     }
-  }
+  };
 
   const handlePrevDefinition = () => {
     if (definitionIndex > 0) {
-      setDefinitionIndex(definitionIndex - 1)
+      setDefinitionIndex(definitionIndex - 1);
     } else if (meaningIndex > 0) {
-      setMeaningIndex(meaningIndex - 1)
-      setDefinitionIndex(meanings[meaningIndex - 1].definitions.length - 1)
+      setMeaningIndex(meaningIndex - 1);
+      setDefinitionIndex(meanings[meaningIndex - 1].definitions.length - 1);
     }
-  }
+  };
 
   const handleFavoriteWord = async () => {
-	try {
-	  if (isFavorite) {
-		await api.delete(`entries/en/${word}/unfavorite`)
-		setIsFavorite(false)
-	  }
+    try {
+      if (isFavorite) {
+        await api.delete(`entries/en/${word}/unfavorite`);
+        setIsFavorite(false);
+      }
 
-	  await api.post(`entries/en/${word}/favorite`)
-	  setIsFavorite(true)
-	} catch (error) {
-	  handleError(error)
-	}
-  }
+      await api.post(`entries/en/${word}/favorite`);
+      setIsFavorite(true);
+    } catch (error) {
+      handleError(error);
+    }
+  };
 
   return (
     <>
@@ -142,7 +142,9 @@ export function WordInfoCard({ word, phonetics, meanings, onFavoritePage }: Word
                 {currentMeaning.partOfSpeech} - {currentDefinition.definition}
               </Label>
               {currentDefinition.example && (
-                <Label className="text-sm md:text-lg italic">{currentDefinition.example}</Label>
+                <Label className="text-sm italic md:text-lg">
+                  {currentDefinition.example}
+                </Label>
               )}
             </div>
           )}
@@ -155,15 +157,18 @@ export function WordInfoCard({ word, phonetics, meanings, onFavoritePage }: Word
               Voltar
             </Button>
             <Button
-              className="md:w-20 md:h-8 lg:w-24 lg:h-10 xl:w-36 xl:h-14 p-4"
+              className="p-4 md:w-20 md:h-8 lg:w-24 lg:h-10 xl:w-36 xl:h-14"
               onClick={handleFavoriteWord}
             >
-            {isFavorite ? 'Desfavoritar' : 'Favoritar'}
+              {isFavorite ? "Desfavoritar" : "Favoritar"}
             </Button>
             <Button
               className="md:w-20 md:h-8 lg:w-24 lg:h-10 xl:w-36 xl:h-14"
               onClick={handleNextDefinition}
-              disabled={meaningIndex === meanings.length - 1 && definitionIndex === currentMeaning.definitions.length - 1}
+              disabled={
+                meaningIndex === meanings.length - 1 &&
+                definitionIndex === currentMeaning.definitions.length - 1
+              }
             >
               Próximo
             </Button>
@@ -171,5 +176,5 @@ export function WordInfoCard({ word, phonetics, meanings, onFavoritePage }: Word
         </Card>
       )}
     </>
-  )
+  );
 }

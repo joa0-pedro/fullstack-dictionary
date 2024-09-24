@@ -13,7 +13,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import handleError from "@/lib/handleError"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation"
+import { useState } from "react";
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -40,6 +42,7 @@ import { z } from "zod"
 export default function Page() {
   const { registerUser } = useAuth();
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -99,10 +102,19 @@ export default function Page() {
           </div>
           <div className="grid gap-2">
             <Label {...register("password")}>Senha</Label>
-            <Input type="password" required {...register("password")} />
-            {errors.password && (
-              <Label className="text-red-500">{errors.password.message}</Label>
-            )}
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                {...register("password")}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute text-gray-500 right-2 top-2 dark:text-gray-400"
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
+            </div>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
