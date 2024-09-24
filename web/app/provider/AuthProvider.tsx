@@ -5,9 +5,7 @@ import handleError from '@/lib/handleError';
 import { toast } from "react-toastify";
 
 interface AuthContextData {
-  user: string | null;
   isAuthenticated: boolean;
-  setUser: React.Dispatch<React.SetStateAction<string | null>>;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   registerUser: (
     name: string,
@@ -21,7 +19,6 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
@@ -29,10 +26,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("token");
 
     if (token) {
-      setUser("user");
       setIsAuthenticated(true);
     }
-    console.log("auth ");
 
     router.push("/login");
   }, [router]);
@@ -40,10 +35,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string) => {
     try {
       const response = await api.post("auth/signIn", { email, password });
-      const { token } = response.data;
+      const { token, id } = response.data;
 
       localStorage.setItem("token", token);
-      setUser("user");
+      localStorage.setItem("userId", id);
       setIsAuthenticated(true);
       router.push("/entries/en");
     } catch (error) {
@@ -62,7 +57,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { token } = response.data;
       localStorage.setItem("token", token);
 
-      setUser(email);
       setIsAuthenticated(true);
 
       toast.success("Conta criada com sucesso!");
@@ -73,22 +67,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await api.post("auth/logout");
     localStorage.removeItem("token");
     setIsAuthenticated(false);
-    setUser(null);
+    localStorage.removeItem("userId");
     router.push("/login");
   };
 
   return (
     <AuthContext.Provider
       value={{
-        user,
         isAuthenticated,
         registerUser,
         login,
         logout,
-        setUser,
         setIsAuthenticated,
       }}
     >

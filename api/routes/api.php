@@ -17,13 +17,13 @@ Route::post('/auth/signIn', [AuthController::class, 'signIn'])->name('register')
 Route::post('/auth/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth', CheckTokenExpiration::class])->group(function () {
-Route::get('/entries/en', [WordController::class, 'index']);
-Route::get('/entries/en/{word}', [WordController::class, 'show']);
+    Route::get('/entries/en', [WordController::class, 'index']);
+    Route::get('/entries/en/{word}', [WordController::class, 'show']);
 
-Route::post('/entries/en/{word}/favorite', [FavoriteWordController::class, 'store']);
-Route::delete('/entries/en/{word}/unfavorite', [FavoriteWordController::class, 'destroy']);
+    Route::post('/entries/en/{word}/favorite', [FavoriteWordController::class, 'store']);
+    Route::delete('/entries/en/{word}/unfavorite', [FavoriteWordController::class, 'destroy']);
 
-Route::get('/user/me', [UserController::class, 'show']);
-Route::get('/user/me/history', [HistoryController::class, 'index']);
-Route::get('/user/me/favorites', [FavoriteWordController::class, 'index']);
+    Route::get('/user/{id}', [UserController::class, 'show']);
+    Route::get('/user/me/history', [HistoryController::class, 'index']);
+    Route::get('/user/me/favorites', [FavoriteWordController::class, 'index']);
 });

@@ -2,6 +2,6 @@
 
 import useAuthenticated from '@/hooks/useAuthenticated';
 
-export default function Dashboard() {
+export default function Page() {
   useAuthenticated();
 }

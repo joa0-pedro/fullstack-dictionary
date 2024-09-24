@@ -11,11 +11,11 @@
 
 - Escolher tecnologias para Front-End:
   - [x] Framework (React)
-  - [ ] Estilização (Material UI, Styled Components, etc.)
-  - [ ] Implementar CSS Flexbox + Grid.
-  - [ ] Adotar Design Mobile First.
-  - [ ] Implementar gestão de dados (Redux, Context API, etc.)
-  - [ ] Usar conceitos de Programação Funcional (.map, .filter, .reduce).
+  - [x] Estilização (Material UI, Styled Components, etc.)
+  - [x] Implementar CSS Flexbox + Grid.
+  - [x] Adotar Design Mobile First.
+  - [x] Implementar gestão de dados (Redux, Context API, etc.)
+  - [x] Usar conceitos de Programação Funcional (.map, .filter, .reduce).
 
 - Escolher tecnologias para Back-End:
   - [x] API (PHP)
@@ -31,7 +31,7 @@
   - [x] [GET] /entries/en/:word
   - [x] [POST] /entries/en/:word/favorite
   - [x] [DELETE] /entries/en/:word/unfavorite
-  - [ ] [GET] /user/me
+  - [x] [GET] /user/me
   - [x] [GET] /user/me/history
   - [x] [GET] /user/me/favorites
 - [x] Implementar lógica para salvar histórico.
@@ -41,11 +41,11 @@
 
 #### Desenvolvimento Front-End
 
-- [ ] Implementar login de usuário.
-- [ ] Listar palavras com rolagem infinita.
-- [ ] Exibir detalhes de cada palavra (significados, fonética).
-- [ ] Implementar funcionalidades para salvar e remover favoritos.
-- [ ] Criar página para o histórico de palavras visualizadas.
+- [x] Implementar login de usuário.
+- [x] Listar palavras com rolagem infinita.
+- [x] Exibir detalhes de cada palavra (significados, fonética).
+- [x] Implementar funcionalidades para salvar e remover favoritos.
+- [x] Criar página para o histórico de palavras visualizadas.
 
 #### Documentação
 
@@ -66,6 +66,6 @@
 
 #### Revisão Final
 
-- [ ] Verificar se todos os endpoints estão funcionando corretamente.
-- [ ] Garantir que a interface é amigável e responsiva.
-- [ ] Realizar testes de usabilidade.
+- [x] Verificar se todos os endpoints estão funcionando corretamente.
+- [x] Garantir que a interface é amigável e responsiva.
+- [x] Realizar testes de usabilidade.

@@ -37,34 +37,38 @@ import { z } from "zod"
   type LoginFormData = z.infer<typeof signUpFormSchema>;
 
 
-export default function Register() {
-	const { registerUser } = useAuth();
-	const router = useRouter();
+export default function Page() {
+  const { registerUser } = useAuth();
+  const router = useRouter();
 
-	const {
-	  register,
-	  handleSubmit,
-	  formState: { errors },
-	} = useForm<LoginFormData>({
-	  resolver: zodResolver(signUpFormSchema),
-	});
-	const handleRegister = async (data: LoginFormData) => {
-		try {
-		  await registerUser(data.name, data.email, data.password);
-		} catch (e) {
-		   handleError(e)
-		}
-	  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(signUpFormSchema),
+  });
+  const handleRegister = async (data: LoginFormData) => {
+    try {
+      await registerUser(data.name, data.email, data.password);
+    } catch (e) {
+      handleError(e);
+    }
+  };
 
-	  const handleRedirectToLogin = () => {
-      router.push("/login");
-    };
+  const handleRedirectToLogin = () => {
+    router.push("/login");
+  };
 
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-col items-center mt-8 mb-36">
-        <Label className="mb-5 text-5xl">Dictionary</Label>
-        <Label className="text-3xl ">O seu dicionário ingles online</Label>
+        <Label className="mb-5 text-5xl text-[#020817] dark:text-[#F8FAFC]">
+          Dictionary
+        </Label>
+        <Label className="text-3xl text-[#020817] dark:text-[#F8FAFC]">
+          O seu dicionário ingles online
+        </Label>
       </div>
       <Card className="w-[25%] ">
         <CardHeader>

@@ -69,7 +69,7 @@ class AuthController extends Controller
 
         $user = $request->user();
 
-        DB::table('personal_access_tokens')->where('tokenable_id', $user->id)->delete();
+        DB::table('personal_access_tokens')->where('user_id', $user->id)->delete();
 
         return response()->json(['message' => 'Logout realizado com sucesso.'], 200);
     }

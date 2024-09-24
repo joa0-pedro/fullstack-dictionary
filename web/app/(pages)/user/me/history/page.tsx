@@ -20,7 +20,7 @@ type SearchResults = {
   hasNext: boolean
 }
 
-export default function Homes() {
+export default function Page() {
   const [searchResults, setSearchResults] = useState<SearchResults>({ results: [], cursor: "", hasNext: false })
   const [selectedWordData, setSelectedWordData] = useState<WordInfoCardProps>()
   const [searchParams, setSearchParams] = useState<SearchParams>({ search: "", cursor: "", limit: 80 })
@@ -79,7 +79,7 @@ export default function Homes() {
     <>
       <Header />
       <SearchBar onSearchWords={searchWords} />
-      <div className="flex flex-col w-full h-full md:flex-row justify-center md:space-x-6 mt-2 px-3">
+      <div className="flex flex-col justify-center w-full h-full px-3 mt-2 md:flex-row md:space-x-6">
         <WordInfoCard meanings={selectedWordData?.meanings} phonetics={selectedWordData?.phonetics} word={selectedWordData?.word} />
         <WordListCard
           results={searchResults?.results}
