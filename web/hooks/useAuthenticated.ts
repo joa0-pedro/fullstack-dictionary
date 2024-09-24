@@ -9,6 +9,7 @@ export default function useAuthenticated(){
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
     if (!isAuthenticated && token) {
       setIsAuthenticated(true);
@@ -19,7 +20,7 @@ export default function useAuthenticated(){
       return;
     }
 
-    if (token && isAuthenticated && pathname === "/login") {
+    if (token && userId && isAuthenticated && pathname === "/login") {
       router.push("/entries/en");
     }
   }, [isAuthenticated, pathname]);

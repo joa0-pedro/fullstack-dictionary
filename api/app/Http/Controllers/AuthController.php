@@ -61,15 +61,12 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $token = $request->bearerToken();
+        $params = $request->all();
 
-        if (!$token) {
-            return response()->json(['error' => 'Token não fornecido.'], 401);
-        }
 
-        $user = $request->user();
+        $userId = $params['userId'];
 
-        DB::table('personal_access_tokens')->where('user_id', $user->id)->delete();
+        DB::table('personal_access_tokens')->where('user_id', $userId)->delete();
 
         return response()->json(['message' => 'Logout realizado com sucesso.'], 200);
     }

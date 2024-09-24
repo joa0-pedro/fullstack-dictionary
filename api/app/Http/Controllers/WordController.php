@@ -55,7 +55,7 @@ class WordController extends Controller
         return response()->json($data, 200);
     } catch (ClientException $e) {
         if ($e->getResponse()->getStatusCode() === 404) {
-            return response()->json(['message' => 'Palavra não encontrada.'], 404);
+                return response()->json(['message' => 'Palavra não encontrada na API do dicionário.'], 404);
         }
         return response()->json(['message' => 'Erro ao buscar a palavra.'], 500);
     }

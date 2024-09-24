@@ -68,11 +68,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
-    await api.post("auth/logout");
+	  router.push("/login");
+    await api.post("auth/logout", {
+      userId: localStorage.getItem("userId"),
+    });
     localStorage.removeItem("token");
-    setIsAuthenticated(false);
     localStorage.removeItem("userId");
-    router.push("/login");
+
+    setIsAuthenticated(false);
   };
 
   return (
