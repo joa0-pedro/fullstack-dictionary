@@ -56,47 +56,62 @@ export default function Register() {
 		}
 	  };
 
-	  const handleRedirectToRegister = () => {
-		router.push('/login');
-	}
+	  const handleRedirectToLogin = () => {
+      router.push("/login");
+    };
 
   return (
-  <div className="flex justify-center flex-col items-center">
-	<div className="flex flex-col items-center mt-8 mb-36">
-	    <Label className="text-5xl mb-5">Dictionary</Label>
-	    <Label className="text-3xl ">O seu dicionário ingles online</Label>
-	</div>
-    <Card className="w-[25%] ">
-      <CardHeader>
-        <CardTitle className="text-2xl">Cadastrar</CardTitle>
-        <CardDescription>
-          Insira os dados necessários para cadastrar sua conta.
-        </CardDescription>
-      </CardHeader>
-	  <CardContent className="grid gap-4">
-	  <div className="grid gap-2">
-          <Label>Nome</Label>
-          <Input type="text" required {...register('name')}/>
-          {errors.name && <Label className="text-red-500">{errors.name.message}</Label>}
-        </div>
-        <div className="grid gap-2">
-          <Label >Email</Label>
-          <Input type="email" placeholder="m@example.com" required {...register('email')}/>
-          {errors.email && <Label className="text-red-500">{errors.email.message}</Label>}
-        </div>
-        <div className="grid gap-2">
-          <Label {...register('password')}>Senha</Label>
-          <Input type="password" required {...register('password')}/>
-		  {errors.password && <Label className="text-red-500">{errors.password.message}</Label>}
-        </div>
-      </CardContent>
-      <CardFooter className="flex flex-col gap-2">
-        <Button className="w-full" onClick={handleSubmit(handleRegister)}>Cadastrar</Button>
-		<div className="w-full border-y border-[#D1D5DB] my-2"/>
-		<Label>Já possui uma conta?</Label>
-        <Button className="w-full" onClick={handleRedirectToRegister}>Fazer login</Button>
-      </CardFooter>
-    </Card>
-  </div>
-  )
+    <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center mt-8 mb-36">
+        <Label className="mb-5 text-5xl">Dictionary</Label>
+        <Label className="text-3xl ">O seu dicionário ingles online</Label>
+      </div>
+      <Card className="w-[25%] ">
+        <CardHeader>
+          <CardTitle className="text-2xl">Cadastrar</CardTitle>
+          <CardDescription>
+            Insira os dados necessários para cadastrar sua conta.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="grid gap-2">
+            <Label>Nome</Label>
+            <Input type="text" required {...register("name")} />
+            {errors.name && (
+              <Label className="text-red-500">{errors.name.message}</Label>
+            )}
+          </div>
+          <div className="grid gap-2">
+            <Label>Email</Label>
+            <Input
+              type="email"
+              placeholder="m@example.com"
+              required
+              {...register("email")}
+            />
+            {errors.email && (
+              <Label className="text-red-500">{errors.email.message}</Label>
+            )}
+          </div>
+          <div className="grid gap-2">
+            <Label {...register("password")}>Senha</Label>
+            <Input type="password" required {...register("password")} />
+            {errors.password && (
+              <Label className="text-red-500">{errors.password.message}</Label>
+            )}
+          </div>
+        </CardContent>
+        <CardFooter className="flex flex-col gap-2">
+          <Button className="w-full" onClick={handleSubmit(handleRegister)}>
+            Cadastrar
+          </Button>
+          <div className="w-full border-y border-[#D1D5DB] my-2" />
+          <Label>Já possui uma conta?</Label>
+          <Button className="w-full" onClick={handleRedirectToLogin}>
+            Fazer login
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
 }

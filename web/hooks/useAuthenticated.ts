@@ -15,8 +15,8 @@ export default function useAuthenticated(){
       setIsAuthenticated(true);
     }
 
-    if (!token) {
-      router.push('/login');
+    if (!token && pathname !== "/register") {
+      router.push("/login");
       return;
     }
 

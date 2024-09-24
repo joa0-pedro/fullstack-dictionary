@@ -13,7 +13,7 @@ Route::get('/', function () {
 });
 
 Route::post('/auth/signUp', [AuthController::class, 'signUp'])->name('login');
-Route::post('/auth/signIn', [AuthController::class, 'signIn']);
+Route::post('/auth/signIn', [AuthController::class, 'signIn'])->name('register');
 Route::post('/auth/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth', CheckTokenExpiration::class])->group(function () {
