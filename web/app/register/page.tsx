@@ -115,6 +115,9 @@ export default function Page() {
                 {showPassword ? <EyeOff /> : <Eye />}
               </button>
             </div>
+            {errors.password && (
+              <Label className="text-red-500">{errors.password.message}</Label>
+            )}
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
