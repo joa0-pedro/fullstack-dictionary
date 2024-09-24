@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Number;
 
 class MakeCursorPaginatorService
 {
@@ -32,7 +33,7 @@ class MakeCursorPaginatorService
             'totalDocs' => $totalDocs,
             'previous' => $previousCursor,
             'next' => $nextCursor,
-            'hasNext' => $data->count() === $filters['limit'],
+            'hasNext' => $data->count() === intval($filters['limit']),
             'hasPrev' => $previousCursor !== null,
         ]);
     }

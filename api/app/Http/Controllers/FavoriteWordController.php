@@ -22,7 +22,7 @@ class FavoriteWordController extends Controller
         ]);
 
         $favoriteBaseQuery = FavoriteWord::query()
-            ->where('user_id', '64f77e76-bb6c-4321-b726-ca4220cbd392')
+            ->where('user_id', $user->id)
             ->leftJoin('words', 'favorite_words.word_id', '=', 'words.id');
 
         return MakeCursorPaginatorService::paginate($favoriteBaseQuery, $filters);
@@ -34,13 +34,13 @@ class FavoriteWordController extends Controller
 
         $wordRecord = Word::query()->where('word', $request->word)->first();
 
-        $favoriteWord = FavoriteWord::query()->where('user_id', '64f77e76-bb6c-4321-b726-ca4220cbd392')->where('word_id', $wordRecord->id)->first();
+        $favoriteWord = FavoriteWord::query()->where('user_id', $user->id)->where('word_id', $wordRecord->id)->first();
 
         if ($favoriteWord) {
             return response()->json([], 200);
         }
 
-        User::query()->find('64f77e76-bb6c-4321-b726-ca4220cbd392')->favoriteWords()->attach($wordRecord->id);
+        User::query()->find($user->id)->favoriteWords()->attach($wordRecord->id);
     }
 
     public function destroy(string $word)
@@ -48,7 +48,7 @@ class FavoriteWordController extends Controller
         $user = Auth::user();
 
         $favoriteWord = FavoriteWord::query()
-            ->where('user_id', '64f77e76-bb6c-4321-b726-ca4220cbd392')
+            ->where('user_id', $user->id)
             ->leftJoin('words', 'favorite_words.word_id', '=', 'words.id')
             ->where('words.word', $word)
             ->select('favorite_words.*')

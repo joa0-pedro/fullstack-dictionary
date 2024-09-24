@@ -17,8 +17,6 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string',
         ]);
-        // todo validar se o email existe
-
 
         User::create([
             'name' => $validatedData['name'],
